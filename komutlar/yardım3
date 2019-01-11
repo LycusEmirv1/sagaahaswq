@@ -1,0 +1,30 @@
+const Discord = require('discord.js');
+const ayarlar = require('../ayarlar.json');
+var prefix = ayarlar.prefix;
+
+exports.run = async (client, message, params, args) => {
+
+  const yardım = new Discord.RichEmbed()
+  .setColor(0x36393E)
+      .setAuthor(`Hozikman Bot`, client.user.avatarURL)
+      .setThumbnail(client.user.avatarURL)
+      .addField(`Yardım`, `\n:white_small_square: | **h!yetkili**: Yetkili Komutlarını gösterir\n:white_small_square: | **h!kullanıcı**: Kullanıcılar için komutlar.\n:white_small_square: **h!anakomutlar**: Ana komutları gösterir`)
+      .setFooter(`${message.author.username} tarafından istendi.`, message.author.avatarURL)
+  return message.channel.sendEmbed(yardım);
+
+};
+
+
+  
+exports.conf = {
+    enabled: true,
+    guildOnly: false,
+    aliases: ['komut', 'komutlar', 'command', 'yardım', 'help', 'halp', 'y', 'h', 'commands'],
+    permLevel: 0
+  };
+  
+  exports.help = {
+    name: 'yardım',
+    description: 'yardım',
+    usage: 'yardım'
+  };

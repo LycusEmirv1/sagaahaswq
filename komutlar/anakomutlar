@@ -1,0 +1,36 @@
+const Discord = require('discord.js');
+const ayarlar = require('../ayarlar.json');
+
+var prefix = ayarlar.prefix;
+
+exports.run = (client, message, params) => {
+  const embedyardim = new Discord.RichEmbed()
+  .setTitle("Komutlar")
+  .setDescription('')
+  .setColor(2067276)
+  .addField("**🎅  Ana Komutlar  🎅**", "**h!yardım** \n Bot Komutlarını Atar.\n**h!ping** \n Bot Gecikme Süresini Söyler.\n**h!sunucudavet** \n Bot sunucunun davet linkini atar.\n**h!twitch** \n Hozikmanın twitch adresini atar.\n**h!instagram** \n Hozikmanın instagram adresini atar.")
+  if (!params[0]) {
+    const commandNames = Array.from(client.commands.keys());
+    const longest = commandNames.reduce((long, str) => Math.max(long, str.length), 0);
+    message.channel.send(embedyardim);
+  } else {
+    let command = params[0];
+    if (client.commands.has(command)) {
+      command = client.commands.get(command);
+      message.author.send('asciidoc', `= ${command.help.name} = \n${command.help.description}\nDoğru kullanım: ` + prefix + `${command.help.usage}`);
+    }
+  }
+};
+
+exports.conf = {
+  enabled: true,
+  guildOnly: false,
+  aliases: ['anakomut'],
+  permLevel: 0
+};
+
+exports.help = {
+  name: 'anakomutlar',
+  description: 'Ana komutları gösterir.',
+  usage: ''
+};

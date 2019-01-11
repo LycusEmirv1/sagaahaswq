@@ -1,0 +1,37 @@
+const Discord = require('discord.js');
+const ayarlar = require('../ayarlar.json');
+
+var prefix = ayarlar.prefix;
+
+exports.run = (client, message, params) => {
+  const embedyardim = new Discord.RichEmbed()
+  .setTitle("Komutlar")
+  .setDescription('')
+  .setColor(2067276)
+  .addField("** 🎅 Yetkili Komutları 🎅  **", "**h!ban** \n İstediğiniz Kişiyi Sunucudan Banlar. \n**h!kick**  \n İstediğiniz Kişiyi Sunucudan Atar. \n**h!unban** \n İstediğiniz Kişinin Yasağını Açar.\n**h!duyur** \n Sunucudaki herkese özelden iletdiğiniz mesajı yazar.\n**h!emojiyazı** \n Yazdığınız mesajı emoji haline getirir.\n**h!yaz** \n İstediğiniz mesajı bota yazdırır.\n**h!temizle** \n Belirtilen sayı kadar mesaj siler.\n**h!kilit** \n Kanalı istediğiniz kadar süreyle kitler.\n**h!uyar** \n Belirlediğiniz kişiyi uyarır.Bu kişiyi #uyarı-alanlar kısmında belirir.\n**h!tempmute** \n Seçilen kişiyi süreli bir şekilde susturur.\n**h!unmute** \n Seçilen kişinin mutesini kaldırır.\n**h!rolver** \n Belirlenen kişiye seçilen rol verilir.\n**h!efekt** \n Belirtilen resim linkine 'eski' efekti uygular.")
+  .setThumbnail(client.user.AvatarURL)
+  if (!params[0]) {
+    const commandNames = Array.from(client.commands.keys());
+    const longest = commandNames.reduce((long, str) => Math.max(long, str.length), 0);
+    message.channel.send(embedyardim);
+  } else {
+    let command = params[0];
+    if (client.commands.has(command)) {
+      command = client.commands.get(command);
+      message.author.send('asciidoc', `= ${command.help.name} = \n${command.help.description}\nDoğru kullanım: ` + prefix + `${command.help.usage}`);
+    }
+  }
+};
+
+exports.conf = {
+  enabled: true,
+  guildOnly: false,
+  aliases: ['yetkilikomut'],
+  permLevel: 0
+};
+
+exports.help = {
+  name: 'yetkili',
+  description: '',
+  usage: ':h!yetkili'
+};

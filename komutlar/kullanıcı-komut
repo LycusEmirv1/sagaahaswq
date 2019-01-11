@@ -1,0 +1,37 @@
+const Discord = require('discord.js');
+const ayarlar = require('../ayarlar.json');
+
+var prefix = ayarlar.prefix;
+
+exports.run = (client, message, params) => {
+  const embedyardim = new Discord.RichEmbed()
+  .setTitle("Komutlar")
+  .setDescription('')
+  .setColor(2067276)
+  .addField("**🎅  Kullanıcı Komutları 🎅**", "**h!avatar**  \nSeçilen kişinin discord avatarını gösterir.\n**h!banned**  \n Troll amaçlı banned gifi \n**h!slots** \n Slots oyununu oynatır. \n**h!alkış** \n Bot alkışlar\n**h!servericon** \n Sunucunun iconunu gösterir.\n**h!sorusor** \n Bot bazı soruları cevaplar. \n**h!hesapla** \n Belirtilen işlemi yapar.\n**h!havadurumu** \n Türkiyedeki şehirlerin sıcaklık değerini söyler.\n**h!kullanıcıbilgim** \n  Komutu kullanan kişi hakkında bilgi verir.\n**h!steamfiyat** \n Belirtilen oyunun fiyatını söyler .\n**h!wasted** \n Belirtilen kişinin avatarına wasted efekti ekler. \n**h!nitroefekt** \n Belirtilen kişinin avatarına nitro efekti ekler.\n**h!tersrenk** \n Belirtilen kişinin avatarına ters renk efekti uygular.\n**h!trigger** \n Seçilen kişinin avatarına triggered efekti (gif) uygular.\n**h!atatürkçerçeve** \n Avatarınıza Atatürk Çerçeve'si ekler.\n**h!radyo** \n Seçilen radyo kanalındaki şarkıyı çalar.\n**h!missionpassed** \n Seçilen kişinin fotorğafına 'mission passed' efekti uygular.")
+  .setThumbnail(client.user.AvatarURL)
+  if (!params[0]) {
+    const commandNames = Array.from(client.commands.keys());
+    const longest = commandNames.reduce((long, str) => Math.max(long, str.length), 0);
+    message.channel.send(embedyardim);
+  } else {
+    let command = params[0];
+    if (client.commands.has(command)) {
+      command = client.commands.get(command);
+      message.author.send('asciidoc', `= ${command.help.name} = \n${command.help.description}\nDoğru kullanım: ` + prefix + `${command.help.usage}`);
+    }
+  }
+};
+
+exports.conf = {
+  enabled: true,
+  guildOnly: false,
+  aliases: ['kullanıcı'],
+  permLevel: 0
+};
+
+exports.help = {
+  name: 'kullanıcıkomut',
+  description: '',
+  usage: 'h!kullanıcıkomut'
+};
